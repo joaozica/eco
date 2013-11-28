@@ -1,0 +1,35 @@
+<%= form_for(@test_type) do |f| %>
+  <% if @test_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@test_type.errors.count, "erro") %> encontrado(s):</h2>
+
+      <ul>
+      <% @test_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="actions">
+    <fieldset>
+        <label>Dados do tipo de droga</label>
+        <section><label for="text_field">Nome</label>
+          <div><%= text_field_tag 'test_type[name]', @test_type.name, type: "text",class: "g4"%></div>
+        </section>
+        <section><label for="text_field">Abreviação</label>
+          <div><%= text_field_tag 'test_type[short_name]', @test_type.short_name, type: "text", class: "g4",required: "required"%></div>
+        </section>
+         <section><label for="text_field">Material coletado</label>
+          <div><%= select_tag 'test_type[collected_material]', '<option>Ar Alveolar</option><option>Saliva</option><option>Sangue</option><option>Urina</option>'.html_safe, :prompt => @test_type.collected_material %></div>
+        </section>
+        <section><label for="text_field">Descrição</label>
+          <div><%= text_field_tag 'test_type[description]', @test_type.description, type: "text"%></div>
+        </section>
+        <section>
+        <div>
+           <%= f.submit "Salvar", :class => "submit"%>
+        </div>
+      </section>
+    </fidelset>
+  </div>
+<% end %>

@@ -1,0 +1,24 @@
+<body>
+	<%= render 'welcome/partials/admin_header' %>
+
+	<section >
+		<div class="g12">
+			<h2>Esqueceu sua senha?</h2>
+
+			<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+			  <%= devise_error_messages! %>
+
+			  <div><p><%= f.label "Digite seu email" %>
+			  <%= f.email_field :email, :autofocus => true , class: "g4"%></p>
+			  <br /><br /><br />
+
+			  <%= f.submit "Envie-me instruções redefinir a senha", class: "submit" %></div>
+			<% end %>
+		</div>
+		<%= render "devise/shared/links" %>
+	</section>
+	
+	<%= render 'welcome/partials/footer' %>
+
+
+

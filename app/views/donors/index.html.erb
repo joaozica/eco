@@ -1,0 +1,59 @@
+<%= stylesheet_link_tag 'print', :media => 'print' %>
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<script type="text/javascript">
+  function DoPrinting() {
+       if (!window.print){
+               alert("Use o Netscape  ou Internet Explorer \n nas versões 4.0 ou superior!")
+               return
+       }
+       window.print()
+  }
+</script>
+<section id="content" class="content  noprint-relatorio-content">
+  <div class="g12">
+   <h1  class="noprint-noshadow">Funcionários</h1>
+    <p class="noprint-noshadow">Gerenciar e visualizar os funcionários<br/><a href="#" onclick="DoPrinting()" class="noprint">Imprimir</a> </p>
+  <p class="noprint"> 
+  <%= link_to 'Novo Funcionário', new_donor_path, class: 'btn' %>
+  </p>
+
+   <%  if not current_user.admin? %>
+          <% @donors = Donor.where("company_id = ?", current_user.company_id) %>
+        <% end %>
+    <% if @donors.empty? %>
+    <br />
+    <h4>Ainda não há funcionários cadastrados, clique em Novo Funcionário para cadastrar.</h4>
+    <% else %>
+  
+    <table class="datatable">
+      <thead>
+        <tr>
+          <th class="noprint-noshadow">Nome<div class="icon_order"></th>
+          <th class="noprint-noshadow">Número do documento<div class="icon_order"></th>
+          <th class="noprint-noshadow">Data de nascimento<div class="icon_order"></th>
+          <th class="noprint-noshadow">Cargo<div class="icon_order"></th>
+          <th class="noprint">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @donors.each do |donor| %>
+        <tr class="gradeA">
+          <td class="noprint-noshadow"><%= donor.name %></td>
+          <td class="noprint-noshadow"><%= donor.legal_identifier  %></td>
+          <% if donor.birth_date == nil %>
+            <td class="noprint-noshadow"><%=  %>
+              <% else %>
+          <td class="noprint-noshadow"><%= donor.birth_date.strftime("%d/%m/%Y") %></td><% end %><td class="noprint-noshadow"><%= donor.role%></td></td><td class="noprint"><%= link_to 'Visualizar', donor, class: 'btn small' %><%= link_to 'Editar', edit_donor_path(donor), class: 'btn small' %><%= link_to 'Deletar', donor, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn small' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+
+</section>
+
+  <br />
+<%= render 'welcome/partials/footer' %>

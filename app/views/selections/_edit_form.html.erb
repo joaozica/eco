@@ -1,0 +1,48 @@
+<%= form_for(@selection) do |f| %>
+  <% if @selection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@selection.errors.count, "erro") %> encontrado(s):</h2>
+
+      <ul>
+      <% @selection.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+   <fieldset>
+      <section><label for="text_tooltip">Nome</label>
+        <div><%= text_field_tag 'selection[name]',@selection.name, type: "text"%></div>
+         </section> 
+      <% if not current_user.admin?%>
+          <section><label for="text_tooltip">Critério</label>
+            <div><%= @criteria%></div>
+          </section>
+        <section><label for="text_tooltip">Responsável pelo sorteio</label>
+        <div><%= @selection.selection_responsible %></div>
+      </section>
+            <section><label for="text_tooltip">Responsável pela aplicação do teste</label>
+        <div><%= text_field_tag 'selection[exame_responsible]',@selection.exame_responsible, type: "text", class: "g4",required: "required"%></div>
+      </section>
+      <% else %>
+        <section><label for="text_tooltip">Critério</label>
+        <div><%= @criteria %><%= hidden_field_tag 'selection[criteria]', @selection.criteria, type: "text"%></div>
+      </section>
+      <section><label for="text_tooltip">Responsável pelo sorteio</label>
+        <div><%= text_field_tag 'selection[selection_responsible]',@selection.selection_responsible, type: "text", class: "g4",required: "required"%></div>
+      </section>
+      <section><label for="text_tooltip">Responsável pela aplicação do teste</label>
+        <div><%= text_field_tag 'selection[exame_responsible]',@selection.exame_responsible, type: "text", class: "g4",required: "required"%></div>
+      </section>
+      
+      <% end %>
+      <section>
+        <div>
+           <%= f.submit"Salvar"%>
+        </div>
+      </section>
+  </fieldset> 
+  </div>
+<% end %>

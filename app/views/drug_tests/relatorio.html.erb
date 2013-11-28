@@ -1,0 +1,79 @@
+<head>
+  <meta charset="utf-8" />
+  <title>Eco Screening</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+  <!--script src="http://code.jquery.com/jquery-1.9.1.js"></script-->
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <!-- link rel="stylesheet" href="/resources/demos/style.css" /-->
+
+  <script>
+  $(function() {
+    $( "#datepicker_i" ).datepicker({
+    	dateFormat: 'dd/mm/yy',
+    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    nextText: 'Próximo',
+    prevText: 'Anterior'
+    });
+  });
+  </script>
+  <script>
+  $(function() {
+    $( "#datepicker_f" ).datepicker({
+    	dateFormat: 'dd/mm/yy',
+    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    nextText: 'Próximo',
+    prevText: 'Anterior'
+    });
+  });
+  </script>
+   <script>
+  $(function() {
+    $( "#datepicker_ia" ).datepicker({
+    	dateFormat: 'dd/mm/yy',
+    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    nextText: 'Próximo',
+    prevText: 'Anterior'
+    });
+  });
+  </script>
+   <script>
+  $(function() {
+    $( "#datepicker_fa" ).datepicker({
+    	dateFormat: 'dd/mm/yy',
+    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    nextText: 'Próximo',
+    prevText: 'Anterior'
+    });
+  });
+  </script>
+</head>
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section class="content">
+  <div class="g12"> 
+    <h1>Relatório de testes</h1>
+      <p>Filtre os resultados das drogas por informações requeridas.</p>
+    <%=form_tag({ controller: "drug_tests", action: "relatorio"}) do %>
+          <%= render 'form_relatorio' %>
+    <% end %>
+  </div>
+</section>
+
+<%= render 'welcome/partials/footer' %>

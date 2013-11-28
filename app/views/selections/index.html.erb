@@ -1,0 +1,56 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section id="content" class="content">
+  <div class="g12">
+    <h1>Testagens</h1>
+    <p>Gerenciar e visualizar as testagens.</p>
+    <% if not current_user.admin? %>
+          <% @selection = Selection.all(joins: "INNER JOIN drug_tests on selections.id = drug_tests.selection_id INNER JOIN donors on donors.id = drug_tests.donor_id inner join selected_tests on selected_tests.drug_test_id = drug_tests.id INNER JOIN users on users.company_id= donors.company_id where(users.company_id = '#{current_user.company.id}' )", group:("selections.id"))
+          %>
+        <% if @selection.empty? %>
+        <br />
+        <h4>Ainda não possui nenhum sorteio cadastrado.</h4>
+      <% else %>
+        <table class="datatable">
+          <thead>
+            <tr>
+              <th>Nome<div class="icon_order"></th><th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @selection.each do |selection| %>
+            <tr class="gradeA">
+              <td><%= selection.name %></td><td><%= link_to 'Visualizar', selection, class: 'btn small' %><%= link_to 'Editar', edit_selection_path(selection), class: 'btn small' %><%= link_to 'Deletar', selection, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn small' %></td>
+            </tr>
+            <% end %>        
+        </tbody>
+      </table>
+    <% end %>
+        
+      <% else %>
+      <% if @selections.empty? %>
+        <br />
+        <h4>Ainda não possui nenhum empresa cadastrada, clique em Nova Empresa e cadastre!</h4>
+      <% else %>
+        <table class="datatable">
+          <thead>
+            <tr>
+              <th>Nome<div class="icon_order"></th><th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @selections.each do |selection| %>
+            <tr class="gradeA">
+              <td><%= selection.name %></td><td><%= link_to 'Visualizar', selection, class: 'btn small' %><%= link_to 'Editar', edit_selection_path(selection), class: 'btn small' %><%= link_to 'Deletar', selection, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn small' %></td>
+            </tr>
+            <% end %>
+        
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+  </div>
+ 
+</section>
+<%= render 'welcome/partials/footer' %>

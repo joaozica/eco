@@ -1,0 +1,16 @@
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section class="content">
+	<div class="g12">
+		<p id="notice"><%= notice %></p>
+		<h2 style="center">Seu sorteio foi criado com sucesso!
+			<br />
+			<br />Verifique em <i>Testes Toxicológicos > Gerenciar Testagens</i> ou <a href="/selections/<%= @created_selection.id %>">clique aqui</a>.
+		</h2>
+		
+	</div>
+</section>
+
+<%= render 'welcome/partials/footer' %>
+
+

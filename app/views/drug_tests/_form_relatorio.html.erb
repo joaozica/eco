@@ -1,0 +1,81 @@
+ <div class="actions">
+  <fieldset>
+   <%  if current_user.admin? %>   
+   <section><label>Empresa</label>
+    <div>
+      <%  
+      company_options = ""  
+      Company.all.each do |company|  
+        company_options += "<option value=\"#{company.id}\">#{company.trade_name}</option>"  
+      end   
+      %>  
+      <%= select_tag  'company_id', company_options.html_safe, :prompt => "Selecione a empresa",id: "cod_company" %>
+    </div>
+  </section> 
+  <section><label for="text_field">Pesquisar por funcionário</label>  
+    <div> 
+     <%= select_tag  'donor_id',"",:prompt => "Todos os funcionários",id:"cod_donors"%>  
+   </div>
+ </section>
+ <% else %>
+ <%= hidden_field_tag "company_id", current_user.company.id%>
+ <section><label for="text_field">Pesquisar por funcionário</label>  
+  <div> 
+
+    <% @donors = Donor.where("company_id = ?", current_user.company_id) %> 
+    <% if @donors.empty? %>
+    <%= "Você ainda não possui funcionarios cadastrados." %>
+    <% else %>
+    <%  
+    donor_options = ""  
+    @donors.order("name asc").each do |donor|  
+      donor_options += "<option value=\"#{donor.id}\">#{donor.name}</option>"  
+    end   
+    %>  
+    <%= select_tag  'donor_id', donor_options.html_safe, :prompt => "Todos os funcionários"%>  
+    <% end %>
+
+  </div>
+</section>  
+
+
+<% end %>
+<section>
+  <label for="text_tooltip">Pesquisar por droga</label>
+  <div>
+    <%  
+    test_type_options = ""  
+    TestType.order("short_name asc").each do |test_type|  
+      test_type_options += "<option value=\"#{test_type.id}\">#{test_type.short_name}</option>"  
+    end   
+    %>  
+    <%= select_tag  'test_type_id', test_type_options.html_safe, :prompt => "Todas as drogas"%>
+  </section>
+
+  <section>
+    <label for="text_tooltip">Pesquisar por resultados</label>
+    <div><%= select_tag "result_test", options_for_select([["Positivo", "positive" ],["Negativo", "negative" ]]), :prompt => "Qualquer resultado"%></div>
+  </section>
+
+  <!--section>
+    <label for="text_tooltip">Pesquisar pela data em que o teste foi cadastrado no sistema</label>
+    <div><%= text_field_tag 'date_i',nil, type: "text",class: "g3",id:"datepicker_i"%><%= text_field_tag 'date_f',nil, type: "text",class: "g3",id:"datepicker_f"%><br/><br/>
+      <small> (Deverá ser informado a data ínicio e a data fim)</small>
+    </div>
+  </section--> 
+
+  <section><label for="text_tooltip">Pesquisar pela data de agendamento dos testes</label>
+    <div><%= text_field_tag 'date_ia',nil, type: "text",class: "g3",id:"datepicker_ia"%><%= text_field_tag 'date_fa',nil, type: "text",class: "g3",id:"datepicker_fa"%><br/><br/><br />
+      <small> (Deverá ser informado o intervalo entre as datas de início e fim desejadas)</small></div>
+    </section> 
+
+    <section>
+      <div>
+        <%= submit_tag "Filtrar", class: 'button small' %>
+        <%= link_to 'Voltar', "/dashboard",class: 'button small' %>
+      </div>
+    </section>
+
+  </fieldset> 
+</div>
+

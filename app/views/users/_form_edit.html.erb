@@ -1,0 +1,48 @@
+
+  <div class="actions">
+  <fieldset>
+          <label>Dados do Usuário</label>
+          <%  if current_user.admin? %>
+          <section><label for="text_field">Empresa</label>  
+            
+            <%  
+               company_options = ""
+                      company_options_selected = ""
+
+                      Company.all.each do |company|
+                      if company.id == @user.company.id
+                        company_options_selected = "selected"
+                      else
+                        company_options_selected = ""
+                      end
+                      company_options += "<option #{company_options_selected} value=\"#{company.id}\">#{company.trade_name}</option>"
+                      end 
+                    %>
+            <%= select_tag  'user[company_id]', company_options.html_safe, :prompt => "Selecione a empresa",required: "required" %>  
+          </section>  
+          <% else %>
+           <section><label for="text_field">Empresa</label>  
+           <div> <%= current_user.company.trade_name %></div>
+          </section>  
+          <%= hidden_field_tag "user[company_id]", current_user.company.id%>
+          <% end %>
+          
+          <section><label for="text_tooltip">Nome</label>
+            <div><%= text_field_tag 'user[name]',@user.name, type: "text", class: "g8"%></div>
+          </section>
+
+          <section><label for="email_field">Email</label>
+            <div><%= email_field_tag 'user[email]',@user.email, type: "email",class: "g5",required: "required"  %></div>
+          </section>
+          
+          <section><label for="text_tooltip">Cargo</label>
+            <div><%= text_field_tag 'user[role]',@user.role, type: "text", class: "g4"%></div>
+          </section> 
+          <section>
+          <div>
+            <%= submit_tag "Salvar"%>
+          </div>
+          </section>
+        </fieldset>
+     </div>
+

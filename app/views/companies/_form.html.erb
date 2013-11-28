@@ -1,0 +1,63 @@
+<%= form_for(@company) do |f| %>
+  <% if @company.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@company.errors.count, "erro") %> encontrado(s):</h2>
+
+      <ul>
+      <% @company.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+ <div class="actions">
+ <fieldset>
+        <label>Dados da Empresa</label>
+
+        <section><label for="text_field">CNPJ</label>
+          <div><%= text_field_tag 'company[legal_identifier]',nil, type: "text", class: "g4",required: "required"%></div>
+        </section>   
+        <section><label for="text_field">Razão social</label>
+          <div><%= text_field_tag 'company[legal_name]',nil, type: "text",required: "required"%></div>
+        </section>   
+        <section><label for="text_field">Nome fantasia</label>
+          <div><%= text_field_tag 'company[trade_name]',nil, type: "text",required: "required"%></div>
+        </section>
+        <section><label for="email_field">Email para contato</label>
+          <div><%= email_field_tag 'company[contact_email]',nil, type: "email",class: "g5"%></div>
+        </section>
+        <section><label for="">Telefone de contato</label>
+          <div><input type="text" id="regex_number" name="company[contact_phone]" data-regex="^[0-9 ]+$" class="g5" ></div>
+        </section>
+         <section><label for="email_field">Nome para contato</label>
+          <div><%= text_field_tag 'company[contact_name]',nil,class: "g5", type: "text"%></div>
+        </section>
+        <section><label for="">Endereço</label>
+          <div>
+           <%= text_field_tag 'company[address]',nil, type: "text",class: "g5",required: "required"%>
+                <%= text_field_tag 'company[address_neighbourhood]',nil, type: "text",class: "g3",required: "required"%>
+        <%
+          state_options = ""
+          State.all.each do |state|
+            state_options += "<option value=\"#{state.id}\">#{state.name}</option>"
+          end 
+        %>
+        <%= select_tag  'state_id', state_options.html_safe, :prompt => "Estado", id: "cod_estados", style: "width: 97%" ,required: "required"%>    
+        <%= select_tag  'company[city_id]', "", :prompt => "Cidade", id: "cod_cidades", style: "width: 97%" ,required: "required" %>
+            
+            <span style="padding: 0; margin: 0; margin-right: 16px" class="g5">Logradouro (rua/avenida, numero, complemento)</span>
+            <span style="padding: 0; margin: 0; margin-right: 16px" class="g3">Bairro</span>
+
+
+          </div>
+        </section>
+      <section>
+        <div>
+           <%= f.submit "Cadastrar", :class => "submit"%>
+        </div>
+      </section>
+      </fieldset>
+
+    
+  </div>
+<% end %>

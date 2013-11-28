@@ -1,0 +1,25 @@
+I, [2013-10-18T18:20:58.265031 #10592]  INFO -- : Refreshing Gem list
+I, [2013-10-18T18:21:03.046771 #10592]  INFO -- : listening on addr=/sites/eco_escreening/tmp/sockets/unicorn.sock fd=9
+I, [2013-10-18T18:21:03.140687 #10595]  INFO -- : worker=0 ready
+I, [2013-10-18T18:21:03.175580 #10598]  INFO -- : worker=1 ready
+I, [2013-10-18T18:21:03.203109 #10592]  INFO -- : master process ready
+I, [2013-10-18T18:21:03.217711 #10601]  INFO -- : worker=2 ready
+I, [2013-10-18T18:21:03.234405 #10604]  INFO -- : worker=3 ready
+I, [2013-10-18T18:21:08.343506 #10592]  INFO -- : reaped #<Process::Status: pid 10595 exit 0> worker=0
+I, [2013-10-18T18:21:08.343816 #10592]  INFO -- : reaped #<Process::Status: pid 10598 exit 0> worker=1
+I, [2013-10-18T18:21:08.350160 #10592]  INFO -- : reaped #<Process::Status: pid 10601 exit 0> worker=2
+I, [2013-10-18T18:21:08.350460 #10592]  INFO -- : reaped #<Process::Status: pid 10604 exit 0> worker=3
+I, [2013-10-18T18:21:08.351045 #10592]  INFO -- : master complete
+I, [2013-10-18T18:21:10.885225 #10613]  INFO -- : Refreshing Gem list
+I, [2013-10-18T18:21:15.761828 #10613]  INFO -- : unlinking existing socket=/sites/eco_escreening/tmp/sockets/unicorn.sock
+I, [2013-10-18T18:21:15.762142 #10613]  INFO -- : listening on addr=/sites/eco_escreening/tmp/sockets/unicorn.sock fd=10
+I, [2013-10-18T18:21:15.955083 #10613]  INFO -- : master process ready
+I, [2013-10-18T18:21:16.091053 #10616]  INFO -- : worker=0 ready
+I, [2013-10-18T18:21:16.136370 #10619]  INFO -- : worker=1 ready
+I, [2013-10-18T18:21:16.174987 #10622]  INFO -- : worker=2 ready
+I, [2013-10-18T18:21:16.189584 #10625]  INFO -- : worker=3 ready
+I, [2013-10-18T18:32:07.915128 #10613]  INFO -- : reaped #<Process::Status: pid 10616 exit 0> worker=0
+I, [2013-10-18T18:32:07.915317 #10613]  INFO -- : reaped #<Process::Status: pid 10619 exit 0> worker=1
+I, [2013-10-18T18:32:07.915512 #10613]  INFO -- : reaped #<Process::Status: pid 10622 exit 0> worker=2
+I, [2013-10-18T18:32:07.915636 #10613]  INFO -- : reaped #<Process::Status: pid 10625 exit 0> worker=3
+I, [2013-10-18T18:32:07.915832 #10613]  INFO -- : master complete

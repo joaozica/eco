@@ -1,0 +1,41 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+
+<section id="content" class="content">
+  <div class="g12">
+    <h1>Testes de Drogas</h1>
+    <p>Gerenciar e visualizar os testes de drogas.</p>
+    <%  if not current_user.admin? %>
+      <%
+      @drug_tests = DrugTest.all(joins: "INNER JOIN donors on donors.id = drug_tests.donor_id INNER JOIN users on users.company_id= donors.company_id where(users.company_id = '#{current_user.company.id}')")
+      %>
+    <% end %>
+    <% if @drug_tests.empty? %>
+      <br />
+      <h4>Ainda não possui nenhum teste de droga cadastrado, clique em Sorteio e cadastre!</h4>
+    <% else %>
+      <table class="datatable">
+        <thead>
+          <tr>
+          <th>Nome do Funcionário<div class="icon_order"></th><th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @drug_tests.each do |drug_test| %>
+            <tr class="gradeA">
+              
+
+          <td><%= drug_test.donor.name %></td>
+
+          <td>
+            <%= link_to 'Visualizar', drug_test, class: 'btn small' %>
+            <% if not current_user.admin? %><%= link_to 'Atualizar', edit_drug_test_path(drug_test), class: 'btn small' %><% else %><%= link_to 'Editar', edit_drug_test_path(drug_test), class: 'btn small' %><%end%><%= link_to 'Deletar', drug_test, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn small' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</section>
+<%= render 'welcome/partials/footer' %>

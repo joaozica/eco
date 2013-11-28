@@ -1,0 +1,85 @@
+<%= form_for(@donor) do |f| %>
+  <% if @donor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@donor.errors.count, "erro") %> encontrado(s):</h2>
+
+      <ul>
+      <% @donor.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="actions">
+    <fieldset>
+        <label>Dados do funcionário</label>
+         <section><label for="text_field">Empresa</label>  
+          <div>  
+            
+            <%  if current_user.admin? %>
+            <%  
+                   company_options = ""  
+                    Company.all.each do |company|  
+                    company_options += "<option value=\"#{company.id}\">#{company.trade_name}</option>"  
+                     end   
+                  %>  
+                <%= select_tag  'donor[company_id]', company_options.html_safe, :prompt => "Selecione a empresa",required: "required" %>
+                <% else %>
+            <%= current_user.company.trade_name%>
+            <%= hidden_field_tag "donor[company_id]", current_user.company.id%>
+            <% end %>  
+          </section> 
+          
+        <section><label for="email_field">Nome</label>
+          <div><%= text_field_tag 'donor[name]',nil, type: "text",required: "required"%></div>
+        </section>
+        <section><label for="email_field">Sexo</label>
+          <div><%= select_tag 'donor[gender]', '<option value="M">Masculino</option><option value="F">Feminino</option>'.html_safe, :prompt => "Sexo" %>
+          </div>
+        </section>
+         <section><label for="text_field">Número do documento</label>
+          <div><%= text_field_tag 'donor[legal_identifier]',nil, type: "text", class: "g4",required: "required"%></div>
+        </section> 
+        <section><label for="text_tooltip">Tipo de documento</label>
+        <div>
+          <%= select_tag 'donor[document_type]', '<option value="CPF">CPF</option><option value="RG" selected="selected">RG</option>'.html_safe, :prompt => "Selecione" %>
+          </div>
+       </section>
+        <section><label for="3">Data de nascimento</label>
+          <div>
+            <%= date_select("donor","birth_date", 
+              {:start_year => Time.now.year, 
+              :end_year =>1920, 
+              :order => [:day, :month, :year],
+              :prompt => {:day => 'Dia', :month => 'Mês', :year => 'Ano' }}, {:class => "rounded-field"}) %>
+            </div>
+        </section>
+        <section><label for="text_tooltip">Cargo</label>
+          <div><%= text_field_tag 'donor[role]',nil, type: "text", class: "g4",required: "required"%></div>
+        </section>
+        <section><label for="text_tooltip">Faz uso de medicação com receita prescrita por um profissional da área médica? </label>
+          <div>
+            <p>
+              <input type="radio" name="donor[uses_medication]" id="choice1" value="false" data-theme="a" onClick="document.getElementById('uses_medication_description').style.display='none';" />
+              <label for="choice1">Não</label>
+            </p>
+            <p>
+              <input type="radio" name="donor[uses_medication]" id="choice4" value="true" data-theme="a" onClick="document.getElementById('uses_medication_description').style.display='';"/> <label for="choice4">Sim</label>
+            </p>
+            <div id="uses_medication_description" style="display: none;">         
+              <label class="l-auto"></label> 
+              Qual medicamento? 
+              <input type="text" true="true"  size = 30 name="donor[uses_medication_description]">
+            </div>
+          </div>
+        </section>
+       
+        <section>
+          <div>
+             <%= f.submit "Cadastrar" %>
+          </div>
+        </section>
+      </fieldset> 
+    
+  </div>
+<% end %>

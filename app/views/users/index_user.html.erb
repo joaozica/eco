@@ -1,0 +1,23 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section class="content">
+  <div class="g12">
+    <h1>Minha conta</h1>
+    <p>Visualize sua conta do sistema Eco Screening.</p>
+    <table class="datatable">
+      <thead>
+        <tr>
+          <th>Nome </th><th>Empresa</th><th>Email</th></th><th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="gradeA">
+          <td><%= @users.name %></td><td><%= @users.company.trade_name%></td><td><%= @users.email%></td>
+          <td><%= link_to 'Visualizar', "/users/#{@users.id}", class: 'btn small' %><%= link_to 'Editar', "/users/#{@users.id}/editar", class: 'btn small' %><%= link_to "Alterar Senha", edit_user_registration_path,class: 'btn small' %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>  
+</section>
+<%= render 'welcome/partials/footer' %>

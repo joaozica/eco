@@ -1,0 +1,62 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section class="content">
+	<div class="g12">
+
+		<h1>Testagem</h1>
+		<p>Informações da testagem.</p>
+		<p>
+  		Para o preenchimento manual dos resultados das testagens, imprima e utilize a seguinte planilha <u><%= link_to "Excel (clique para salvar)", selection_path(format: "xls") %></u>
+		</p>
+		<p id="notice"><%= notice %></p>
+		<form id="form">
+			<fieldset>
+				<label>Dados da Seleção</label>
+				<section><label for="text_field">Nome da testagem</label>
+					<div>
+						<p><%= @selection.name %></p>
+					</div>
+				</section>
+				<section><label for="text_tooltip">Responsável pelo sorteio</label>
+			        <div><%=@selection.selection_responsible%></div>
+			      </section>
+			      <section><label for="text_tooltip">Responsável pela aplicação do teste</label>
+			        <div><%= @selection.exame_responsible%></div>
+			      </section>
+				<%@donor_test = DrugTest.joins("INNER JOIN donors d on d.id = drug_tests.donor_id").where("selection_id = ?", @selection.id).order("d.name asc") %>
+				<section><label for="">Funcionários</label>
+					<div>
+						<table class="datatable">
+							<thead>
+								<tr>
+								<th>Nomes</th>
+								<th>Agendado para a data</th>
+								<th>Resultados</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% @donor_test.each do |donor_test| %>
+									<tr>
+									<td><p><%= link_to "#{donor_test.donor.name}", "/donors/#{donor_test.donor.id}" %></td>
+									<%if donor_test.scheduled_to == nil%>
+									<td><%= "-"%></p></td>
+									<% else %>
+									<td><%= donor_test.scheduled_to.strftime("%d/%m/%Y")%></p></td>
+									<% end %>
+									<% if donor_test.selected_test.where("result is null").any? %>
+										<td><%= link_to 'Incluir Resultado', "/drug_tests/#{donor_test.id}/edit", class: 'btn small' %></td>
+									<% else %>
+										<td><%= link_to 'Visualizar Resultado', "/drug_tests/#{donor_test.id}", class: 'btn small' %></td>
+									<% end %>
+									</tr>
+								<% end %>        
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</fieldset>
+		</form>
+	</div>
+</section>
+<%= render 'welcome/partials/footer' %>

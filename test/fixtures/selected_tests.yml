@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  drug_test: 
+  test_type: 
+  result: MyString
+
+two:
+  drug_test: 
+  test_type: 
+  result: MyString

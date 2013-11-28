@@ -1,0 +1,36 @@
+<%= form_for(@selection) do |f| %>
+  <% if @selection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@selection.errors.count, "erro") %> encontrado(s):</h2>
+
+      <ul>
+      <% @selection.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+   <fieldset>
+      <section><label for="text_tooltip">Nome</label>
+        <div><%= text_field_tag 'selection[name]',nil, type: "text",required: "required"%></div>
+      </section>
+      <section><label for="text_tooltip">Critério</label>
+        <div><%= text_field_tag 'selection[criteria]',nil, type: "text", class: "g4",required: "required"%></div>
+      </section>
+      <section><label for="text_tooltip">Responsável Técnico pela Seleção</label>
+        <div><%= text_field_tag 'selection[ selection_responsible]',nil, type: "text", class: "g4",required: "required"%></div>
+      </section>
+      <section><label for="text_tooltip">Responsável pela aplicação do teste</label>
+        <div><%= text_field_tag 'selection[exame_responsible,]',nil, type: "text", class: "g4",required: "required"%></div>
+      </section>
+     
+      <section>
+        <div>
+           <%= f.submit "Cadastrar"%>
+        </div>
+      </section>
+  </fieldset> 
+  </div>
+<% end %>

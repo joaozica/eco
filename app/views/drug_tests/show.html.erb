@@ -1,0 +1,85 @@
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+
+<section class="content">
+  <div class="g12">
+  	<% if @drug_test.selected_test.where("result is not null").any? %>
+  	<%= link_to "Laudo | Download PDF", drug_test_path(:format=>:pdf) ,class: 'btn small' %>
+  	<% end %>
+    <h1>Teste de Drogas</h1>
+    <p>Informações do teste de droga.</p>
+	
+
+		<img src="/drug_tests/<%=@drug_test.id%>.png" alt="" width="100" class="qrcode">
+
+
+	<p id="notice"><%= notice %></p>
+	<% if not current_user.admin? %>
+<%= link_to 'Atualizar', edit_drug_test_path, class: 'btn small' %><% else %><%= link_to 'Editar', edit_drug_test_path, class: 'btn small' %><% end %> 
+	<% if params[:src] == 'r' %>
+	<%= link_to 'Voltar', 'javascript:history.back()',class: 'button small' %>
+	<% else %>
+	<%= link_to 'Voltar', @drug_test.selection,class: 'button small' %>
+	<% end %>
+	<form id="form">
+		<fieldset>
+			<label>Dados dos Testes de Drogas</label>
+			<section><label for="text_field">Funcionário</label>
+				<div>
+					<% if @drug_test.donor == nil %>
+						<%= "-" %>
+					<% else %>
+						<%= @drug_test.donor.name %>
+					<% end %>
+				</div>
+			</section>
+			<section><label for="text_field">Tipos de drogas</label>
+				<div>
+					<% if @drug_test.selected_test == nil %>
+						<%= "não foi selecionado testes"%>
+					<% else %>
+					  <table>
+                  <tr>
+                  <th>Nome das drogas</th><th>Resultados</th>
+						<% @drug_test.selected_test.all.each do |selected_type|%>
+                      </tr>
+      						<% type_test=TestType.find_by_id(selected_type.test_type_id) %>
+							<td> <%=  type_test.name %> - <b><%= type_test.short_name %></b>
+							</td>	
+                        	<% if selected_type.result == 'positive' %>
+                          		<td><img src="/assets/tick.png" alt="" align="left"> <span style="line-height: 24px">Positivo</span></td>
+                        	<% elsif selected_type.result == 'negative' %>
+                       			<td><img src="/assets/exclamation.png" alt="" align="left"> <span style="line-height: 24px">Negativo</span></td>
+                        	<% else %>
+                         		<td><img src="/assets/clock.png" alt="" align="left"> <span style="line-height: 24px">	Aguardando</span></td>
+							<% end %>
+                        </tr>
+                    <% end %>         
+              </table>
+			    
+							
+					<% end %>					
+				</div>
+			</section>
+		    <section><label for="text_field">Anotações</label>
+		      <div>
+		      	<%= @drug_test.notes %>
+		      </div>
+		    </section>
+			<section><label for="text_field">Agendado para</label>
+				<div>
+					<% if @drug_test.scheduled_to == nil %>
+						<%= "-" %>
+					<% else %>
+						<%= @drug_test.scheduled_to.strftime("%d/%m/%Y") %>                
+					<% end %>
+				</div>
+			</section>
+			
+
+		</fidelset>
+	</form>
+
+
+</section>
+<%= render 'welcome/partials/footer' %>

@@ -1,0 +1,164 @@
+<%= form_for(@drug_test) do |f| %>
+  <% if @drug_test.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@drug_test.errors.count, "erro") %> encontrado(s):</h2>
+
+      <ul>
+      <% @drug_test.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <fieldset>
+      <%  if not current_user.admin? %>
+        <section><label for="text_field">Nome da testagem</label>  
+          <div>  
+            <% if @drug_test.selection == nil %>
+              <%= "Teste Individual!!"%>
+            <% else %>
+              <%= @drug_test.selection.name%> 
+            <% end %>
+          </div> 
+        </section>  
+        <section><label for="text_field">Funcionário</label>  
+          <div> 
+            <%= @drug_test.donor.name%>
+          </div>
+          </section> 
+          <%if @drug_test.selection.exame_responsible.blank? %>
+        <section><label for="text_tooltip">Responsável pela aplicação do teste</label>
+        <div><%= text_field_tag 'selection[exame_responsible]',nil, type: "text", required: "required"%></div>
+      </section> 
+      <% else %>
+      <section><label for="text_tooltip">Responsável pela aplicação do teste</label>
+              <div><%= @drug_test.selection.exame_responsible%></div>
+              <%= hidden_field_tag "selection[selection_responsible]", @drug_test.selection.exame_responsible%>
+            </section>
+      <% end %>
+        <section><label for="3">Agendado para</label>
+          <div>
+            <%if not @drug_test.scheduled_to == nil %>
+              <%= @drug_test.scheduled_to.strftime("%d/%m/%Y") %>
+            <% else %>
+              <%="não preenchido"%>
+            <% end %>
+          </div>
+        </section>
+        <section><label for="text_field">Tipos de drogas</label>
+          <div>
+            <% if @drug_test.selected_test == nil %>
+                 <%= "não foi selecionado testes"%>
+            <% else %>
+              <table>
+                  <tr>
+                  <th>Nome das drogas</th><th>Resultados</th>
+                    <% @drug_test.selected_test.all.each do |selected_type|%>
+                      </tr>
+                          <% type_test=TestType.find_by_id(selected_type.test_type_id) %>
+                          <% if selected_type.completed_at.blank? %>
+                            <%= hidden_field_tag "tests[][id]",selected_type.id %>
+                            <td><%=  type_test.name%>  - <b><%=type_test.short_name%></b></td>
+                            <td><%= select_tag "tests[][result]", options_for_select([["Positivo", "positive" ],["Negativo", "negative" ]], selected_type.result), :prompt => "Selecione"%></td> 
+                          <% else %>
+                            <td><%=  type_test.name%>  - <b><%=type_test.short_name%></b></td>
+                            <% if selected_type.result == 'positive' %>
+                              <td><img src="/assets/tick.png" alt="" align="left"> <span style="line-height: 24px">Positivo</span></td>
+                            <% elsif selected_type.result == 'negative' %>
+                              <td><img src="/assets/exclamation.png" alt="" align="left"> <span style="line-height: 24px">Negativo</span></td>
+                            <% else %>
+                             <td><img src="/assets/clock.png" alt="" align="left"> <span style="line-height: 24px">Aguardando</span></td>
+                            <% end %>
+                          <% end %>
+                        </tr>
+                    <% end %>         
+              </table>
+            <% end %>
+          </div>
+        </section>  
+        
+        <section><label for="text_field">Anotações</label>
+
+          <div>
+          <% if @drug_test.notes.blank? %>
+            <textarea id="textarea_auto" name="drug_test[notes]" type="text" value="" data-autogrow="true" class="text"></textarea>
+          <% else %>  
+           <%=@drug_test.notes%>
+          <% end %>
+          </div>
+        </section>
+      <% else %> <!--Se for admim geral-->
+                  <section><label for="text_field">Nome da testagem</label>  
+          <div>  
+            <% if @drug_test.selection == nil %>
+              <%= "Teste Individual!!"%>
+            <% else %>
+              <%= @drug_test.selection.name%> 
+            <% end %>
+          </div> 
+        </section>  
+        <section><label for="text_field">Funcionário</label>  
+          <div> 
+            <%= @drug_test.donor.name%>
+          </div>
+          </section> 
+          <%if @drug_test.selection.exame_responsible.blank? %>
+        <section><label for="text_tooltip">Responsável pela aplicação do teste</label>
+        <div><%= text_field_tag 'selection[exame_responsible]',nil, type: "text", required: "required"%></div>
+      </section> 
+      <% else %>
+      <section><label for="text_tooltip">Responsável pela aplicação do teste</label>
+        <div><%= text_field_tag 'selection[exame_responsible]',@drug_test.selection.exame_responsible, type: "text", required: "required"%></div>
+      </section>
+      <% end %>
+        <section><label for="3">Agendado para</label>
+          <div>
+            <%if not @drug_test.scheduled_to == nil %>
+              <%= @drug_test.scheduled_to.strftime("%d/%m/%Y") %>
+            <% else %>
+              <%="não preenchido"%>
+            <% end %>
+          </div>
+        </section>
+        <section><label for="text_field">Tipos de drogas</label>
+          <div>
+            <% if @drug_test.selected_test == nil %>
+                 <%= "não foi selecionado testes"%>
+            <% else %>
+              <table>
+                  <tr>
+                  <th>Nome da droga</th><th>Resultado</th>
+                    <% @drug_test.selected_test.all.each do |selected_type|%>
+                      </tr>
+                          <% type_test=TestType.find_by_id(selected_type.test_type_id) %>
+                            <%= hidden_field_tag "tests[][id]",selected_type.id %>
+                            <td><%=  type_test.name%>  - <b><%=type_test.short_name%></b></td>
+                            <td><%= select_tag "tests[][result]", options_for_select([["Positivo", "positive" ],["Negativo", "negative" ]], selected_type.result), :prompt => "Selecione"%></td> 
+                        </tr>
+                    <% end %>         
+              </table>
+            <% end %>
+          </div>
+        </section>  
+        
+        <section><label for="text_field">Anotações</label>
+
+          <div>
+          <% if @drug_test.notes.blank? %>
+            <textarea id="textarea_auto" name="drug_test[notes]" type="text" data-autogrow="true" class="text"></textarea>
+          <% else %>  
+           <textarea id="textarea_auto" name="drug_test[notes]" type="text" data-autogrow="true" class="text"><%=@drug_test.notes%></textarea>
+          <% end %>
+          </div>
+        </section>
+      <% end %>
+      <section>
+        <div>
+         <%= f.submit "Salvar",  method: :confirm, data: { confirm: 'Você tem certeza?' }%>
+        </div>
+      </section>
+    </fieldset> 
+  </div>
+<% end %>

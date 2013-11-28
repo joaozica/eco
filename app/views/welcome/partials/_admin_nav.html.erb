@@ -1,0 +1,83 @@
+<nav class="noprint noprint-width0">
+	<ul id="nav">
+		
+		<% if current_user.admin?%>
+		<li class="i_house"><a href="/dashboard"><span>Painel Principal</span></a></li>
+		<li class="i_companies"><a href="/companies"><span>Empresas</span></a></li>
+		<li class="i_admin_user_2"><a href="/users"><span>Usuários</span></a></li>
+		<li class="i_users_2"><a><span>Funcionários</span></a>
+			<ul>
+				<li><a href="/import_data"><span>Importar Funcionários</span></a></li>
+				<li><a href="/donors"><span>Gerenciar Funcionários</span></a></li>
+			</ul>
+		</li>
+		<li class="i_calendar"><a><span>Criar Sorteio</span></a>
+			<ul>
+				<li><a href="/selection_random"><span>Amostras Aleatórias</span></a></li>
+				<li><a href="/selection_by_historical"><span>Histórico de Drogas</span></a></li>
+				<li><a href="/selection_motivado"><span>Motivado</span></a></li>
+			</ul>
+		</li>
+		<li class="i_chemical"><a><span>Testes Toxicológicos</span></a>
+			<ul>
+				<li><a href="/test_types"><span>Cadastro de Drogas</span></a></li>
+				<li><a href="/testes_pendentes"><span>Testagens Pendentes</span></a></li>
+				<li><a href="/testes_realizados"><span>Testagens Realizadas</span></a></li>
+				<li><a  href="/selections"><span>Gerenciar Testagens</span></a></li>
+				<li><a href="/relatorio"><span>Relatórios</span></a></li>
+			</ul>
+		</li>
+		<li class="i_medical_case"><a href="/clinics"><span>Clínicas</span></a></li>
+
+		
+		<% else %>
+		<li class="i_house"><a href="/dashboard"><span>Painel Principal</span></a></li>
+		<li class="i_admin_user_2"><a href="/users/<%=current_user.id%>/index"><span>Minha conta</span></a></li>
+		<li class="i_companies"><a href="/user_company_index"><span>Empresa</span></a></li>
+		<li class="i_users_2"><a><span>Funcionários</span></a>
+			<ul>
+				<li><a href="/import_data"><span>Importar Funcionários</span></a></li>
+				<li><a href="/donors"><span>Gerenciar Funcionários</span></a></li>
+			</ul>
+		</li>
+		<li class="i_calendar"><a><span>Criar Sorteio</span></a>
+			<ul>
+				<li><a href="/selection_random"><span>Amostras Aleatórias</span></a></li>
+				<li><a href="/selection_by_historical"><span>Histórico de Drogas</span></a></li>
+				<li><a href="/selection_motivado"><span>Motivado</span></a></li>
+			</ul>
+		</li>
+		<li class="i_chemical"><a><span>Testes Toxicológicos</span></a>
+			<ul>
+				<li><a href="/testes_pendentes"><span>Testagens Pendentes</span></a></li>
+				<li><a href="/testes_realizados"><span>Testagens Realizadas</span></a></li>
+				<li><a  href="/selections"><span>Gerenciar Testagens</span></a></li>
+				<li><a href="/relatorio"><span>Relatórios</span></a></li>
+			</ul>
+		</li>
+		<li class="i_medical_case"><a href="/clinics"><span>Clínicas</span></a></li>
+		
+		<% end %>
+
+
+
+
+
+
+		<!-- li class="i_tick"><a><span>Resultados</span></a></li>
+		<li class="i_clipboard"><a><span>Relatórios</span></a></li>
+		<li class="i_bended_arrow_down"><a><span>Importar Dados</span></a></li>
+		<li class="i_empty"><a><span>Gerar QR Code</span></a></li>
+		<li class="i_ruler"><a><span>Auditoria e Sorteio</span></a>
+			<ul>
+				<li><a><span>Sorteio de Amostras Aleatórias</span></a></li>
+				<li><a><span>Sorteio de Histórico de Testes</span></a></li>
+				<li><a><span>Emissão de Relatórios Gerais</span></a></li>
+			</ul>
+		</li-->
+	</ul>
+	 <%= javascript_include_tag "javascript_city" %>
+
+</nav>
+
+

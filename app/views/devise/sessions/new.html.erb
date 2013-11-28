@@ -1,0 +1,44 @@
+<body id="login">
+
+<style type="text/css">
+	#loginform > div {
+		display: none !important;
+	}
+	html {
+		background:url(/assets/fundo.png) !important;
+	}
+</style>
+<div id="shadow">
+<header class="login">
+	<div id="logo" class="login">
+		<a href="login.html">whitelabel</a>
+	</div>
+</header>
+<section >
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:id => "loginform"}) do |f| %>
+
+	<fieldset>
+		<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+		<section><%= f.label :Usuário %>
+			<div><%= f.email_field :email, :autofocus => true, :id => "username" %></div>
+		</section>
+		<section><%= f.label :Senha %>
+			<div><%= f.password_field :password,:id => "password" %></div>
+			<div>
+			<!--<input type="checkbox" id="remember"><label for="remember">Lembrar de mim</label>-->
+		</section>
+		
+		<section>
+			<div><%= render "devise/shared/links" %></div>
+			<div><%= f.button "Login", {:class => "fr submit"} %></div>
+		</section>
+	</fieldset>
+
+<% end %>
+
+</section>
+
+</div>
+
+<footer>Geeks</footer>

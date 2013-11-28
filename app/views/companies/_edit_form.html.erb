@@ -1,0 +1,96 @@
+<%= form_for(@company) do |f| %>
+  <% if @company.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@company.errors.count, "erro") %> encontrado(s):</h2>
+      <ul>
+        <% @company.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+         <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="actions">
+    <fieldset>
+      <label>Dados da empresa</label>
+      <section><label for="text_field">CNPJ</label>
+        <div><%= text_field_tag 'company[legal_identifier]',@company.legal_identifier, type: "text", class: "g4"%></div>
+      </section>   
+      <section><label for="text_field">Razão social</label>
+        <div><%= text_field_tag 'company[legal_name]',@company.legal_name, type: "text"%></div>
+      </section>   
+      <section><label for="text_field">Nome fantasia</label>
+        <div><%= text_field_tag 'company[trade_name]',@company.trade_name, type: "text"%></div>
+      </section>
+      <section><label for="email_field">Email para contato</label>
+        <div><%= email_field_tag 'company[contact_email]',@company.contact_email, type: "email",class: "g5"%></div>
+      </section>
+      <section><label for="">Telefone de contato</label>
+        <div><input type="text" id="regex_number" name="company[contact_phone]" data-regex="^[0-9 ]+$" class="g5" value="<%=@company.contact_phone%>" ></div>
+      </section>
+      <section><label for="email_field">Nome para contato</label>
+        <div><%= text_field_tag 'company[contact_name]',@company.contact_name,class: "g5", type: "text"%></div>
+      </section>
+      <section><label for="">Endereço</label>
+        <div>
+          <%= text_field_tag 'company[address]',@company.address, type: "text",class: "g5"%>
+          <%= text_field_tag 'company[address_neighbourhood]',@company.address_neighbourhood, type: "text",class: "g3"%>
+          <span style="padding: 0; margin: 0; margin-right: 16px" class="g5">Logradouro (rua/avenida, numero, complemento)</span>
+          <span style="padding: 0; margin: 0; margin-right: 16px" class="g3">Bairro</span> 
+          <br/><br/>
+          <% if @company.city == nil %>
+            <%
+              state_options = ""
+              State.all.each do |state|
+                state_options += "<option value=\"#{state.id}\">#{state.name}</option>"
+              end 
+            %>
+            <br/><br/>
+            Estado:<%= select_tag  'state_id', state_options.html_safe, :prompt => "Estado", id: "cod_estados", style: "width: 97%"  ,required: "required"%>    
+            Cidade:<%= select_tag  'company[city_id]', "", :prompt => "Cidade", id: "cod_cidades", style: "width: 97%"  ,required: "required"%>
+          <% else %>
+            <div>
+            <%
+              state_options = ""
+              state_options_selected = ""
+
+              State.all.each do |state|
+              if @company.city == nil
+                state_options_selected = ""
+              elsif state.id == @company.city.state.id
+                state_options_selected = "selected"
+              else
+                state_options_selected = ""
+              end
+              state_options += "<option #{state_options_selected} value=\"#{state.id}\">#{state.name}</option>"
+              end 
+            %>
+            <%
+              city_options = ""
+              city_options_selected = ""
+
+              cities = City.where(:state_id => @company.city.state.id)
+              cities.each do |city|
+                if @company.city == nil
+                 city_options_selected = ""
+                elsif city.id == @company.city.id
+                  city_options_selected = "selected"
+                else
+                  city_options_selected = ""
+                end
+                  city_options += "<option #{city_options_selected} value=\"#{city.id}\">#{city.name}</option>"
+              end 
+            %>
+            <br/><br/>
+            Estado:<%= select_tag  'state_id', state_options.html_safe, prompt: "Estado", id: 'cod_estados', class: 'rounded_form_field',  style: "width: 97%" ,required: "required"%>
+          Cidade:<%= select_tag  'company[city_id]', city_options.html_safe, prompt: "Cidade", id: 'cod_cidades', class: 'rounded_form_field',  style: "width: 97%" ,required: "required" %>
+        </div>
+          <% end %>
+            
+        </div>
+      </section>
+      <section>
+        <div><%= f.submit "Salvar"%></div>
+      </section>
+    </fieldset>
+  </div>
+<% end %>

@@ -1,0 +1,53 @@
+
+<body>
+	<%= render 'welcome/partials/admin_header' %>
+
+	<section >
+		<div >
+			<h2>Cadastro de Usuários</h2>
+
+			<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+				<%= devise_error_messages! %>
+
+				<fieldset>
+
+					<label>Dados do Usuário</label>
+					<section><label for="text_field">Empresa</label>  
+						
+						<%  
+							company_options = ""  
+							Company.all.each do |company|  
+							company_options += "<option value=\"#{company.id}\">#{company.trade_name}</option>"  
+							end   
+							%>  
+						<%= select_tag  'user[company_id]', company_options.html_safe, :prompt => "Selecione a empresa",required: "required" %>  
+					</section>  
+					
+					<section><label for="text_tooltip">Nome</label>
+						<div><%= text_field_tag 'user[name]',nil, type: "text", class: "g8"%></div>
+					</section>
+
+					<section><label for="email_field">Email</label>
+						<div><%= email_field_tag 'user[email]',nil, type: "email",class: "g5",required: "required" %></div>
+					</section>
+					<section><label for="">Senha</label>
+						<div><%= password_field_tag 'user[password]',nil, type: "password", class: "g3",required: "required" %></div>
+					</section>
+					<section><label for="text_tooltip">Cargo</label>
+						<div><%= text_field_tag 'user[role]',nil, type: "text", class: "g4"%></div>
+					</section> 
+					<section>
+					<div>
+						<%= f.submit "Cadastrar"%>
+					</div>
+					</section>
+				</fieldset>
+			<% end %>
+		</div>
+		<%= render "devise/shared/links" %>
+	</section>
+	
+	<%= render 'welcome/partials/footer' %>
+
+
+

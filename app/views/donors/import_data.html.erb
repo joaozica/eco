@@ -1,0 +1,26 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section  class="content">
+  <div class="g12">
+  <h1>Importar funcionários de um arquivo CSV</h1>
+		<p>Importe funcionários por meio de um planilha no formato CSV (comma-separated values)</p>
+
+  <h3>Importar Funcionários</h3>
+
+  <%= form_tag import_donors_path, multipart: true do %>
+
+  
+  <p  class="notice"><h4 style="color:red"><%= notice %></h4></p>
+    <%= file_field_tag :file, :accept => "csv" %>
+    <%= submit_tag "Importar", class: "submit" %>
+  <% end %>
+    <p><b>IMPORTANTE:</b> Esta é uma operação avançada que deve ser acompanhada por um técnico especializado ou pelo administrador do sistema.</p>
+    <p><b>PRÉ-REQUISITOS:</b> O arquivo CSV (comma-separated values) enviado deve possuir:</p>
+    <ul>
+      <li>Extensão ".csv";</li>
+      <li>Codificação UTF-8;</li>
+      <li>Nome do arquivo composto apenas por caractéres alfanuméricos (a-z, A-Z, 0-9) e caractéres: "_", "-" e "."</li>
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,78 @@
+<%= stylesheet_link_tag 'print', :media => 'print' %>
+
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<script type="text/javascript">
+  function DoPrinting() {
+       if (!window.print){
+               alert("Use o Netscape  ou Internet Explorer \n nas versões 4.0 ou superior!")
+               return
+       }
+       window.print()
+  }
+</script>
+<section class="content noprint-relatorio-content">
+	<div class="g12">
+		<h1 class="noprint-noshadow">Funcionário</h1>
+    <p class="noprint-noshadow">Informações do funcionário<br/><a href="#" onclick="DoPrinting()" class="noprint">Imprimir</a> </p>
+		
+		<p id="notice"><%= notice %></p>
+		<form id="form">
+			<fieldset>
+		
+				<div ><label class="noprint-noshadow">Dados do funcionário</label><%= link_to 'Editar', edit_donor_path(@donor), class: 'button small noprint' %></div>
+				<section><label class="noprint-noshadow" for="text_field">ID da Empresa</label>
+					<div>
+						<p class="noprint-noshadow"><%= @donor.company_id %></p>
+					</div>
+				</section>
+				<section><label class="noprint-noshadow" for="">Nome</label>
+					<div>
+						<p class="noprint-noshadow"><%= @donor.name %></p>
+					</div>
+				</section>
+				<section><label class="noprint-noshadow" for="">Sexo</label>
+					<div>
+						<% if @donor.gender == 'M' %>
+			                <p class="noprint-noshadow"><%= "Masculino" %></p>
+			             <% elsif @donor.gender == 'F'%>
+			             	<p class="noprint-noshadow"><%= "Feminino" %></p>
+			             <% end %>
+					</div>
+				</section>
+				<section><label class="noprint-noshadow" for="">Número do documento</label>
+					<div>
+						<p class="noprint-noshadow"><%= @donor.legal_identifier %></p>
+					</div>
+				</section>
+				<section><label class="noprint-noshadow" for="text_tooltip">Tipo do documento</label>
+					<div>
+						<p class="noprint-noshadow"><%= @donor.document_type %></p>
+					</div>
+				</section>
+				<section><label class="noprint-noshadow" for="text_tooltip">Data de nascimento</label>
+					<div>
+						<p class="noprint-noshadow"><%= @donor.birth_date.strftime("%d/%m/%Y") %></p>
+					</div>
+				</section>
+				<section><label class="noprint-noshadow" for="text_tooltip">Cargo</label>
+					<div>
+						<p class="noprint-noshadow"><%= @donor.role %></p>
+					</div>
+				</section>
+				<section><label class="noprint-noshadow" for="text_tooltip">Faz uso de medicação com receita prescrita por um profissional da área da médica?</label>
+					<div>
+						<%if @donor.uses_medication == true %>
+               				<p class="noprint-noshadow">Sim, <%= @donor.uses_medication_description %></p>
+		              	<% else %>
+		                	<p class="noprint-noshadow"><%= "Não faz uso de medicação."%></p>
+		             	<% end %>
+					</div>
+				</section>
+			</fieldset>
+		</form>
+		<%= link_to 'Voltar', donors_path, class: 'button small noprint' %>
+	</div>
+</section>
+<%= render 'welcome/partials/footer' %>

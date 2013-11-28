@@ -1,0 +1,15 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section class="content">
+	<div class="g12"> 
+		<h1>Sorteio por Histórico de Drogas</h1>
+
+   		<p>Sorteio realizado em cima dos resultados positivos nos tipos de drogas</p>
+		<form id="form" action="" method="post" autocomplete="off">
+			<%= render 'form_selection_by_historical' %>
+		</form>
+	</div>
+</section>
+
+<%= render 'welcome/partials/footer' %>

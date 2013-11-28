@@ -1,0 +1,97 @@
+<%= form_for(@drug_test) do |f| %>
+  <% if @drug_test.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@drug_test.errors.count, "erro") %> encontrado(s):</h2>
+
+      <ul>
+      <% @drug_test.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <fieldset>
+      <%  if not current_user.admin? %>
+          <section><label>Empresa</label>
+             <div>
+            <%=current_user.company.trade_name%>  
+            </div>
+          </section> 
+          <section><label for="text_field">Responsável técnico / Médico</label>  
+            <div>  
+              <%= current_user.name %>
+            </div>
+          </section>   
+
+      <% else %>
+        <section><label>Empresa</label>
+          <div>
+            <%  
+              company_options = ""  
+              Company.all.each do |company|  
+              company_options += "<option value=\"#{company.id}\">#{company.trade_name}</option>"  
+              end   
+            %>  
+            <%= select_tag  'company_id', company_options.html_safe, :prompt => "Selecione a empresa",id: "cod_company",required: "required" %>
+          </div>
+        </section> 
+
+        <section><label for="text_field">Responsável técnico / Médico</label>  
+          <div>  
+            
+              <%= select_tag  'selection[selection_responsible]', "", :prompt => "Selecione o responsável técnico / médico",id: "cod_users",required: "required" %>
+            
+          </div>
+        </section>     
+        <% end %>
+    <section><label for="text_field">Tipos de Testes</label>  
+      <div>  
+        <%  
+          test_type_options = ""  
+          TestType.all.each do |test_type|  
+          test_type_options += "<option value=\"#{test_type.id}\">#{test_type.name}</option>"  
+          end   
+        %>  
+        <%= select_tag  'test_types', test_type_options.html_safe,:multiple => true, :prompt => "Selecione o tipo de droga",required: "required" %>
+      </div>       
+    </section>  
+
+    <section><label for="text_field">Funcionario</label>  
+      <div> 
+        <%  if not current_user.admin? %>
+          <% @donors = Donor.where("company_id = ?", current_user.company_id) %> 
+          <% if @donors.empty? %>
+            <%= "Você ainda não possui funcionarios cadastrados." %>
+          <% else %>
+            <%  
+            donor_options = ""  
+            @donors.all.each do |donor|  
+            donor_options += "<option value=\"#{donor.id}\">#{donor.name}</option>"  
+            end   
+            %>  
+            <%= select_tag  'drug_test[donor_id]', donor_options.html_safe, :prompt => "Selecione o funcionário",required: "required" %>  
+          <% end %>
+        <% else %>
+          <%= select_tag  'drug_test[donor_id]', "", :prompt => "Selecione o funcionário",id:"cod_donors",required: "required" %>  
+        <% end %>
+      </div>
+    </section>  
+    <section><label for="3">Agendado para</label>
+      <div>
+        <%= date_select("drug_test","scheduled_to", 
+        {:start_year => Time.now.year, 
+        :end_year =>Time.now.year + 5, 
+        :order => [:day, :month, :year],
+        :prompt => {:day => 'Dia', :month => 'Mês', :year => 'Ano' }}, {:class => "rounded-field"}) %>
+      </div>
+    </section>
+    <section>
+      <div>
+       <%= f.submit "Cadastrar"%>
+      </div>
+    </section>
+  </fieldset> 
+  </div>
+<% end %>

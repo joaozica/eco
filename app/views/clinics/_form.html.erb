@@ -1,0 +1,49 @@
+<%= form_for(@clinic) do |f| %>
+  <% if @clinic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@clinic.errors.count, "erro") %> encontrado(s):</h2>
+
+      <ul>
+      <% @clinic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+     <fieldset>
+        <label>Dados da Clinica</label>
+
+         <section><label for="text_field">Nome</label>
+          <div><%= text_field_tag 'clinic[name]',nil,class: "g5", type: "text",required: "required"%></div>
+        </section>
+        <section><label for="">Endereço</label>
+          <div>
+            <%= text_field_tag 'clinic[address]',nil, type: "text",class: "g5",required: "required"%>
+                <%= text_field_tag 'clinic[address_neighbourhood]',nil, type: "text",class: "g3",required: "required"%>
+        <%
+          state_options = ""
+          State.all.each do |state|
+            state_options += "<option value=\"#{state.id}\">#{state.name}</option>"
+          end 
+        %>
+        <%= select_tag  'state_id', state_options.html_safe, :prompt => "Estado", id: "cod_estados", style: "width: 97%",required: "required" %>    
+        <%= select_tag  'clinic[city_id]', "", :prompt => "Cidade", id: "cod_cidades", style: "width: 97%" ,required: "required"%>
+            
+            <span style="padding: 0; margin: 0; margin-right: 16px" class="g5">logradouro (rua/avenida, numero, complemento)</span>
+            <span style="padding: 0; margin: 0; margin-right: 16px" class="g3">bairro</span>
+
+
+          </div>
+        </section>
+        <section>
+        <div>
+           <%= f.submit "Cadastrar", :class => "submit"%>
+        </div>
+      </section>
+
+      </fieldset>
+   
+  </div>
+<% end %>

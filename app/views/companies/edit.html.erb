@@ -1,0 +1,28 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+
+<section class="content">
+	<div class="g12">
+		<h1>Editar empresa</h1>
+		<p>Editar informações da empresa</p>
+		<form id="form" action="" method="post" autocomplete="off">
+			<%= render 'edit_form' %>
+		</form>
+		<%=form_tag({ controller: "companies", action: "set_avatar"}, { :id => "set_avatar_form", :multipart => true }) do %>
+		<h3>Definir logomarca para empresa</h3>
+
+			<%= hidden_field_tag "id", params[:id]%>
+				<%= field_set_tag do %>
+			      <%= file_field 'avatar', nil, :multipart => true  %>
+			    <%end%>
+			    <div style="clear: both; padding-top: 20px"></div>
+
+			    <%= link_to "Voltar", "/companies",class: 'button small', style: 'margin-right: 10px;' %> |
+			    <a id="finish_btn" href="#" class='button small' onclick="$('#set_avatar_form').submit();"><span class="triangle"></span> Concluir</a>
+			<%end%>
+	</div>
+</section>
+
+<%= render 'welcome/partials/footer' %>
+

@@ -1,0 +1,31 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section id="content" class="content">
+  <div class="g12">
+    <h1>Tipos de Drogas</h1>
+    <p>Gerenciar e visualizar os tipos de drogas.</p>
+  <p><%= link_to 'Novo Tipo de Droga', new_test_type_path, class: 'btn' %></p>
+
+    <% if @test_types.empty? %>
+    <br />
+    <h4>Ainda não possui nenhum tipo de droga cadastrado, clique em Novo Tipo de Droga e cadastre.</h4>
+    <% else %>
+    <table class="datatable">
+      <thead>
+        <tr>
+          <th>Name<div class="icon_order"></th><th>Abreviação<div class="icon_order"></th><th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @test_types.each do |test_type| %>
+        <tr class="gradeA">
+          <td><%= test_type.name %></td><td><%= test_type.short_name %></td><td><%= link_to 'Visualizar', test_type, class: 'btn small' %><%= link_to 'Editar', edit_test_type_path(test_type), class: 'btn small' %><%= link_to 'Deletar', test_type, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn small' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+</section>
+<%= render 'welcome/partials/footer' %>

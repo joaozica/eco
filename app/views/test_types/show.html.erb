@@ -1,0 +1,40 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+
+<section class="content">
+	<div class="g12">
+		<h1>Tipo de Droga</h1>
+		<p>Informações do tipo de droga.</p>
+		<p id="notice"><%= notice %></p>
+		<form id="form">
+			<fieldset>
+				<div><label>Dados do tipo de droga</label>   
+		<%= link_to 'Editar', edit_test_type_path(@test_type), class: 'button small' %>
+	</div>
+				<section><label for="text_field">Nome</label>
+					<div>
+						<p><%= @test_type.name %></p>
+					</div>
+				</section>
+				<section><label for="text_field">Abreviação</label>
+					<div>
+						<p><%= @test_type.short_name %></p>
+					</div>
+				</section>
+				<section><label for="">Material coletado</label>
+					<div>
+						<p><%= @test_type.collected_material %></p>
+					</div>
+				</section>
+				<section><label for="">Descrição</label>
+					<div>
+						<p><%= @test_type.description %></p>
+					</div>
+				</section>
+			</fieldset>
+		</form>
+		<%= link_to 'Voltar', test_types_path, class: 'button small' %>
+	</div>
+</section>
+<%= render 'welcome/partials/footer' %>

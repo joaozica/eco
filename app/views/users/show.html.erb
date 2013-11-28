@@ -1,0 +1,42 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section class="content">
+	<div class="g12">
+		<%  if not current_user.admin? %>
+		<h2>Minha Conta</h2>
+		<% else %>
+		<h1 >Usuário</h1>
+		<% end %>
+    <p >Informações do usuário. <br/>		
+		<p id="notice"><%= notice %></p>
+		<form id="form">
+			<fieldset>
+		
+				<div ><label >Dados do Usuário</label><%= link_to 'Editar', "/users/#{@user.id}/editar", class: 'button small' %></div>
+					<section><label for="text_field">Empresa</label>  
+						<div><%= @user.company.trade_name%></div>
+					</section>  
+					
+					<section><label for="text_tooltip">Nome</label>
+						<div><%= @user.name%></div>
+					</section>
+
+					<section><label for="email_field">Email</label>
+						<div><%= @user.email %></div>
+					</section>
+					
+					<section><label for="text_tooltip">Cargo</label>
+						<div><%= @user.role %></div>
+					</section> 
+					<section>
+			</fieldset>
+		</form>
+	<%  if current_user.admin? %>
+		<%= link_to 'Voltar', "/users", class: 'button small ' %>
+		<% else %>
+		<%= link_to 'Voltar', "/users/#{current_user.id}/index", class: 'button small ' %>
+		<% end %>
+	</div>
+</section>
+<%= render 'welcome/partials/footer' %>

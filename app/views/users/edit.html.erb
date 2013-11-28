@@ -1,0 +1,21 @@
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section class="content">
+	<div class="g12">
+		<%  if not current_user.admin? %>
+		<h2>Editar seus dados</h2>
+		<% else %>
+		<h2>Editar dados do Usuário</h2>
+		<% end %>
+		<p>Editar dados do usuário.</p>
+
+<%= form_tag ({ controller: "users", action: "edit"}) do %>
+				
+				<%= render 'form_edit' %>
+				<%end%>	
+	</div>
+</section>
+
+<%= render 'welcome/partials/footer' %>
+
+

@@ -1,0 +1,43 @@
+<div id="pageoptions" class="noprint">
+	<% if current_user != nil %>
+	<ul>
+		<li><%= link_to 'Sair', destroy_user_session_path, method: :delete %></li>
+		<!-- li><a href="#" id="wl_config">Configurações</a></li -->
+	</ul>	
+	<% end %>
+</div>
+<header class="noprint">
+	
+	<div id="logo">
+		<a href="dashboard.html">Eco Screening</a>
+	</div>
+	
+	<div id="header">
+		<!-- ul id="headernav">
+			<li>
+				<ul>
+					<li>
+						<a>Cadastro de Usuário</a>
+						<ul>
+							<li><a>Cadastro de Usuário1</a></li>
+							<li><a>Cadastro de Usuário2</a></li>
+							<li><a>Cadastro de Usuário3</a></li>
+						</ul>
+					</li>
+					<li><a>Permissões</a></li>
+					<li><a>Controle de Acesso</a></li>
+				</ul>
+			</li>
+		</ul-->
+		<!-- div id="searchbox">
+			<form id="searchform" autocomplete="off">
+				<input type="search" name="query" id="search" placeholder="Search">
+			</form>
+		</div>
+		<ul id="searchboxresult">
+		</ul -->
+	</div>
+	 <%= javascript_include_tag "javascript_city" %>
+	 <%= javascript_include_tag "javascript_donor" %>
+
+</header>

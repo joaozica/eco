@@ -1,0 +1,83 @@
+<%= form_for(@clinic) do |f| %>
+  <% if @clinic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@clinic.errors.count, "erro") %> encontrado(s):</h2>
+
+      <ul>
+        <% @clinic.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <fieldset>
+      <label>Dados da Clinica</label>
+
+      <section><label for="email_field">Nome</label>
+        <div>
+          <%= text_field_tag 'clinic[name]',@clinic.name,class: "g5", type: "text"%>
+        </div>
+      </section>
+      <section><label for="">Endereço</label>
+        <div>
+          <%= text_field_tag 'clinic[address]',@clinic.address, type: "text",class: "g5"%>
+          <%= text_field_tag 'clinic[address_neighbourhood]',@clinic.address_neighbourhood, type: "text",class: "g3"%>
+          <span style="padding: 0; margin: 0; margin-right: 16px" class="g5">logradouro (rua/avenida, numero, complemento)</span>
+          <span style="padding: 0; margin: 0; margin-right: 16px" class="g3">bairro</span>    
+          <% if @clinic.city == nil %>
+            <%
+              state_options = ""
+                State.all.each do |state|
+                state_options += "<option value=\"#{state.id}\">#{state.name}</option>"
+              end 
+            %>
+            <%= select_tag  'state_id', state_options.html_safe, :prompt => "Estado", id: "cod_estados", style: "width: 97%" ,required: "required"%>    
+            <%= select_tag  'clinic[city_id]', "", :prompt => "Cidade", id: "cod_cidades", style: "width: 97%",required: "required" %>
+          <% else %>
+            <%
+              state_options = ""
+              state_options_selected = ""
+
+              State.all.each do |state|
+                if @clinic.city == nil
+                 state_options_selected = ""
+                elsif state.id == @clinic.city.state.id
+                  state_options_selected = "selected"
+                else
+                  state_options_selected = ""
+                end
+                state_options += "<option #{state_options_selected} value=\"#{state.id}\">#{state.name}</option>"
+              end 
+            %>
+            <%
+              city_options = ""
+              city_options_selected = ""
+
+              cities = City.where(:state_id => @clinic.city.state.id)
+              cities.each do |city|
+                if @clinic.city == nil
+                  city_options_selected = ""
+                elsif city.id == @clinic.city.id
+                  city_options_selected = "selected"
+                else
+                 city_options_selected = ""
+                end
+                city_options += "<option #{city_options_selected} value=\"#{city.id}\">#{city.name}</option>"
+              end 
+            %>
+            
+           <%= select_tag  'state_id', state_options.html_safe, prompt: "Estado", id: 'cod_estados', class: 'rounded_form_field',  style: "width: 97%" ,required: "required"%>
+           <%= select_tag  'clinic[city_id]', city_options.html_safe, prompt: "Cidade", id: 'cod_cidades', class: 'rounded_form_field',  style: "width: 97%" ,required: "required" %>
+          <% end %>
+        </div>
+      </section>
+      <section>
+        <div>
+          <%= f.submit "Salvar"%>
+        </div>
+      </section>
+    </fieldset>
+  </div>
+<% end %>

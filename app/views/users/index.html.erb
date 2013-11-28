@@ -1,0 +1,36 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section id="content" class="content">
+  <div class="g12">
+    <h1>Usuários</h1>
+    <p>Visualize os usuários do sistema Eco Screening.</p>
+    <p><%= link_to 'Novo Usuário', "/users/new", class: 'btn' %></p>
+    <% if @users.empty? %>
+    <br />
+    <h4>Ainda não possui nenhum Usuário cadastrado.</h4>
+    <% else %>
+    <table class="datatable">
+      <thead>
+        <tr>
+          <th>Nome <div class="icon_order"></div></th><th>Empresa<div class="icon_order"></div></th><th>Email<div class="icon_order"></div></th><th>Administrador<div class="icon_order"></div></th><th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+        <tr class="gradeA">
+          <td><%= user.name %></td><td><%= user.company.trade_name%></td><td><%= user.email%></td>
+          <% if user.admin? %>
+          <td><%="Sim" %></td>
+          <% else %>
+          <td><%= "Não" %></td>
+          <% end %>
+          <td><%= link_to 'Visualizar', "users/#{user.id}", class: 'btn small' %><%= link_to 'Editar', "users/#{user.id}/editar", class: 'btn small' %><%= link_to 'Deletar', "users/#{user.id}/destroy", method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn small' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>  
+</section>
+<%= render 'welcome/partials/footer' %>

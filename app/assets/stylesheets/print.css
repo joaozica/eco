@@ -1,0 +1,17 @@
+body.noprint-fontcolor {
+	color: #000 !important;
+}
+.noprint, .dataTables_length, .dataTables_filter, .dataTables_paginate {
+	display: none;
+}
+.noprint-width0 {
+	width: 0px;
+}
+.noprint-relatorio-content {
+	width: 1000px;
+	padding-left: 5px !important;
+}
+.noprint-noshadow {
+	text-shadow: none;
+	color: #000;
+}

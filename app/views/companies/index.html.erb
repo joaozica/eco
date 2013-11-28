@@ -1,0 +1,51 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+
+<section id="content" class="content">
+  <h1>Empresas</h1>
+    <p>Dados das empresas</p>
+  <p><%= link_to 'Nova empresa', new_company_path, class: 'btn' %></p>
+
+  <div class="g12">
+    <% if @companies.empty? %>
+    <br />
+    <h4>Ainda não possui nenhum empresa cadastrada, clique em Nova Empresa para cadastrar</h4>
+    <% else %>
+  
+    <table class="datatable">
+      <thead>
+        <tr>
+          <th>CNPJ<div class="icon_order"></div></th>
+          <th>Nome fantasia<div class="icon_order"></div></th>
+          <th>Estado<div class="icon_order"></div></th>
+          <th>Cidade<div class="icon_order"></div></th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @companies.each do |company| %>
+        <tr class="gradeA">
+          <%if  company.city == nil
+              varcity = '-'
+              varstate = '-'
+            else
+              varcity = company.city.name 
+              varstate = company.city.state.name             
+            end 
+          %>
+
+          <td><%= company.legal_identifier %></td>
+          <td><%= company.trade_name %></td>
+          <td><%= varstate%></td>
+          <td><%= varcity %></td>
+          
+          <td><%= link_to 'Visualizar', company, class: 'btn small' %><%= link_to 'Editar', edit_company_path(company), class: 'btn small' %><%= link_to 'Deletar', company, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn small' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+</section>
+<%= render 'welcome/partials/footer' %>

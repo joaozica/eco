@@ -1,0 +1,91 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+	
+
+
+<section class="content">
+	
+	<div class="g12">
+		<h1>Empresa</h1>
+		<p>Informações da empresa</p>
+		 <%=
+       @avatar_file_jpg = "/uploads/images/companies/#{@company.id}.jpg"
+       @avatar_file_png = "/uploads/images/companies/#{@company.id}.png"
+       if File.exist?("./public#{@avatar_file_jpg}")
+                   "<img src=\"#{@avatar_file_jpg}\" alt=\"\" />".html_safe
+       elsif File.exist?("./public#{@avatar_file_png}" )
+               "<img src=\"#{@avatar_file_png}\" alt=\"\" />".html_safe
+       end
+    %>
+		<p id="notice"><%= notice %></p>
+		
+		<form id="form">
+
+			<fieldset>
+				<div><label>Dados da empresa</label><p><%= link_to 'Editar', edit_company_path(@company), class: 'button small' %>
+	</p></div>
+	<section><label for="text_field">ID da empresa</label>
+					<div>
+						<p><%= @company.id %></p>
+					</div>
+				</section>
+			<section><label for="text_field">CNPJ</label>
+					<div>
+						<p><%= @company.legal_identifier %></p>
+					</div>
+				</section>
+				<section><label for="">Razão social</label>
+					<div>
+						<p><%= @company.legal_name %></p>
+					</div>
+				</section>
+				<section><label for="">Nome fantasia</label>
+					<div>
+						<p><%= @company.trade_name %></p>
+					</div>
+				</section>
+				<section><label for="text_tooltip">Email para contato</label>
+					<div>
+						<p><%= @company.contact_email %></p>
+					</div>
+				</section>
+				<section><label for="text_tooltip">Telefone de contato</label>
+					<div>
+						<p><%= @company.contact_phone %></p>
+					</div>
+				</section>
+				<section><label for="text_tooltip">Nome para contato</label>
+					<div>
+						<p><%= @company.contact_name %></p>
+					</div>
+				</section>
+				<section><label for="text_tooltip">Endereço</label>
+					<div>
+						<p><p><%= @company.address%><%=" - "%><%= @company.address_neighbourhood%></p></p>
+					</div>
+				</section>
+				<% if  @company.city == nil
+					varcity = '-'
+					varstate = '-'
+				   else
+				   	varcity = @company.city.name
+				   	varstate = @company.city.state.name
+				   end %>
+				<section><label for="text_tooltip">Cidade</label>
+					<div>
+						<p><%= varcity %></p>
+					</div>
+				</section>
+				<section><label for="text_tooltip">Estado</label>
+					<div>
+						<p><%= varstate %></p>
+					</div>
+				</section>
+			</fieldset>
+		</form>
+		<%= link_to 'Voltar', companies_path, class: 'button small' %>
+	</div>
+</section>
+
+<%= render 'welcome/partials/footer' %>

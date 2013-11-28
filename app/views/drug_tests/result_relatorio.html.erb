@@ -1,0 +1,56 @@
+<%= stylesheet_link_tag 'print', :media => 'print' %>
+
+<body class="noprint-fontcolor">
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<script type="text/javascript">
+  function DoPrinting() {
+       if (!window.print){
+               alert("Use o Netscape  ou Internet Explorer \n nas versões 4.0 ou superior!")
+               return
+       }
+       window.print()
+  }
+</script>
+
+
+
+<section id="content" class="content noprint-relatorio-content">
+  <div class="g12">
+    <h1 class="noprint-noshadow">Resultado da pesquisa</h1>
+       
+    <%= link_to 'Voltar', "javascript:history.back()", class: 'btn small' %>
+    <p><br/><a href="#" onclick="DoPrinting()" class="noprint">Imprimir</a> </p>
+    
+      <table class="datatable">
+        <thead>
+          <tr>
+          <th class="noprint-noshadow">Funcionário<div class="icon_order"></th>
+          <th class="noprint-noshadow">Droga pesquisada<div class="icon_order"></th>
+          <th class="noprint-noshadow">Data de testagem<div class="icon_order"></th>
+          <th class="noprint-noshadow">Resultado<div class="icon_order"></th>
+          <th class="noprint-noshadow">Ações<div class="icon_order"></th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @selected_tests.each do |selected_test| %>
+            <tr class="gradeA"> 
+              <% drug_test = DrugTest.find_by_id(selected_test.drug_test_id) %>
+              <td><%=drug_test.donor.name%></td>
+              <td><%=selected_test.test_type.short_name%></td>
+              <td><%= drug_test.scheduled_to.strftime("%d/%m/%Y")%></td>
+              <% if selected_test.result == 'positive' %>
+                <td><%= "Positivo" %></td>
+              <% elsif selected_test.result == 'negative' %>
+                <td><%= "Negativo" %></td>
+              <% else %>
+                <td>-</td>
+              <% end %>
+              <td><%= link_to 'Visualizar', "/drug_tests/#{drug_test.id}?src=r", class: 'btn small' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+  </div>
+</section>
+<%= render 'welcome/partials/footer' %>

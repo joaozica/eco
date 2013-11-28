@@ -1,0 +1,40 @@
+<body>
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<section id="content" class="content">
+  <div class="g12">
+    <h1>Clínicas</h1>
+    <p>Gerenciar e visualizar as clínicas.</p>
+<p>
+  <%= link_to 'Nova Clínica', new_clinic_path, class: 'btn' %>
+</p>
+    <% if @clinics.empty? %>
+      <br />
+      <h4>Ainda não há clínicas cadastradas, clique em Nova Clínica para cadastrar.</h4>
+    <% else %>
+      <table class="datatable">
+        <thead>
+          <tr>
+            <th>Nome<div class="icon_order"></th><th>Cidade<div class="icon_order"></th><th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @clinics.each do |clinic| %>
+          <tr class="gradeA">
+
+            <td><%= clinic.name %></td>
+
+            <% if  clinic.city == nil
+              varcity = '-'
+            else
+              varcity = clinic.city.name              
+             end %>
+            <td><%= varcity %></td>
+            <td><%= link_to 'Visualizar', clinic, class: 'btn small' %><%= link_to 'Editar', edit_clinic_path(clinic), class: 'btn small' %><%= link_to 'Deletar', clinic, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn small' %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</section>

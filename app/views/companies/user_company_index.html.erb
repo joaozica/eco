@@ -1,0 +1,37 @@
+<%= stylesheet_link_tag 'print', :media => 'print' %>
+
+<body class="noprint-fontcolor">
+<%= render 'welcome/partials/admin_header' %>
+<%= render 'welcome/partials/admin_nav' %>
+<script type="text/javascript">
+  function DoPrinting() {
+       if (!window.print){
+               alert("Use o Netscape  ou Internet Explorer \n nas versões 4.0 ou superior!");
+               return;
+       }
+       window.print();
+  }
+</script>
+<section class="content noprint-relatorio-content">
+	<div class="g12 ">
+		<h1 class="noprint-noshadow">Empresa</h1>
+    <p>Dados da empresa<br/><a href="#" onclick="DoPrinting()" class="noprint">Imprimir</a> </p>
+		<%=
+       @avatar_file_jpg = "/uploads/images/companies/#{@company.id}.jpg"
+       @avatar_file_png = "/uploads/images/companies/#{@company.id}.png"
+       if File.exist?("./public#{@avatar_file_jpg}")
+          "<img src=\"#{@avatar_file_jpg}\" alt=\"\" />".html_safe
+       elsif File.exist?("./public#{@avatar_file_png}" )
+          "<img src=\"#{@avatar_file_png}\" alt=\"\" />".html_safe
+       end
+    %>
+    <p>
+   <%= link_to ' Definir logomarca', "/user_company", class: 'button small noprint' %></p>
+		<p class="noprint" id="notice"><%= notice %></p>
+		<form id="form">
+			<%= render 'form_user_company' %>
+		</form>
+	</div>
+</section>
+
+<%= render 'welcome/partials/footer' %>
